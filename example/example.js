@@ -11,9 +11,9 @@ window.onload = () => {
   document.body.appendChild(container);
   addClass(container, 'class1');
   addClass(container, 'class2 class3 a');
+  addClass(container, ['class4']);
 
   removeClass(container, 'a');
   removeClass(container, ['class2']);
   setTimeout(() => removeNode(container), 60000);
-
 };
