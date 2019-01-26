@@ -74,11 +74,8 @@ export function addClass(node, list) {
     list = list.split(' ');
 
   if (config.isIE) {
-    let text = node.className;
-    list.forEach(value => {
-      if (node.className.indexOf(value) === -1) text += ` ${value}`;
-    });
-    node.className = text;
+    const classes = node.className.split(' ');
+    node.className += ` ${list.filter(c => classes.indexOf(c) === -1).join(' ')}`;
   }
   else
     list.forEach(value => node.classList.add(value));
