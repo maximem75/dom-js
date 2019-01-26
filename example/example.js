@@ -13,5 +13,7 @@ window.onload = () => {
   addClass(container, 'class2 class3 a');
 
   removeClass(container, 'a');
+  removeClass(container, ['class2']);
   setTimeout(() => removeNode(container), 60000);
+
 };
