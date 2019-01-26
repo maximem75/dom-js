@@ -5,7 +5,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import css from 'rollup-plugin-css-only';
 
 export default {
-  input: 'test/test.js',
+  input: 'example/example.js',
   output: {
     name: 'index',
     file: 'dist/index.js',
