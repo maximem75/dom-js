@@ -85,6 +85,14 @@ export function addClass(node, list) {
 
 }
 
+/**
+ * Set node class
+ * (ex: 'first-class' / 'first-class second-class' / ['first-class', 'second-class'])
+ *
+ * @param node
+ * @param list
+ * @returns {*}
+ */
 export function removeClass(node, list) {
   if (!node || node && node instanceof Element === false)
     return errorMessage(ERROR_NODE);
@@ -150,7 +158,7 @@ function errorMessage(message) {
 }
 
 function detectIE() {
-  const isIE = /*@cc_on!@*/false || !!document.documentMode;
+  const isIE = /*@cc_on!@*/!!document.documentMode;
   const isEdge = !isIE && !!window.StyleMedia;
 
   return isIE || isEdge;
