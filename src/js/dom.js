@@ -8,31 +8,36 @@ const ERROR_CLASS = '[ERROR] -> Empty class list';
 
 const config = {
   showError: false,
-  isIE: detectIE()
+  isIE: detectIE(),
+  namespace: 'http://www.w3.org/2000/svg'
 };
 
 // --- Public functions --- //
 
 /**
- * Create and return an HTML node
+ * Create and return a node
  *
  * @param tag
  * @param attributes
  * @param content
+ * @param isSvg
  * @returns {*}
  */
-export function createNode(tag, attributes, content) {
+export function createNode(tag, attributes, content, isSvg = false) {
   if (!validParams(tag, attributes, content))
     return null;
 
+  if (content instanceof Element)
+    content = [content];
+
   if (content instanceof Array && content.length) {
-    const item = build(tag, attributes, content);
+    const item = build(tag, attributes, content, isSvg);
 
     content.forEach(child => {
       if (child instanceof Element)
         item.appendChild(child);
       else if (typeofText(child))
-        item.appendChild(build('span', null, child));
+        item.appendChild(build('span', null, child, isSvg));
       else
         errorMessage(ERROR_CONTENT);
     });
@@ -40,11 +45,23 @@ export function createNode(tag, attributes, content) {
     return item;
   }
 
-  return build(tag, attributes, content);
+  return build(tag, attributes, content, isSvg);
 }
 
 /**
- * Remove an HTML node
+ * Create and return an SVG node
+ *
+ * @param tag
+ * @param attributes
+ * @param content
+ * @returns {*}
+ */
+export function createSVG(tag, attributes, content) {
+  return createNode(tag, attributes, content, true);
+}
+
+/**
+ * Remove a node
  *
  * @param node
  */
@@ -108,6 +125,12 @@ export function removeClass(node, list) {
     list.forEach(value => node.classList.remove(value));
 }
 
+/**
+ * Set current config
+ * ex:{ showError: true }
+ *
+ * @param object
+ */
 export function setConfig(object) {
   if (object && object instanceof Array === false && object instanceof Object)
     Object.keys(object).forEach(key => config[key] = object[key]);
@@ -115,8 +138,8 @@ export function setConfig(object) {
 
 // --- Private functions --- //
 
-function build(tag, attributes, textContent) {
-  const node = document.createElement(tag);
+function build(tag, attributes, textContent, isSvg) {
+  const node = !isSvg ? document.createElement(tag) : document.createElementNS(config.namespace, tag);
 
   if (typeofText(textContent))
     node.textContent = textContent;
