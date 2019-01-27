@@ -1,4 +1,4 @@
-import {createNode, removeNode, addClass, removeClass, setConfig} from '../src/index';
+import {createNode, createSVG, removeNode, addClass, removeClass, setConfig} from '../src/index';
 
 window.onload = () => {
   setConfig({ showError: true });
@@ -8,7 +8,16 @@ window.onload = () => {
     [ 'test', 55, true, createNode('span', null, 'span 2')]
   );
 
+  const svg = createSVG('svg',
+    { id: 'svg-test', style: 'width: 100px; height: 100px; background-color: red;' },
+    createSVG('g', null,
+      createSVG('rect', { width: '50px', height: '50px', fill: 'black' }, null)
+    )
+  );
+
   document.body.appendChild(container);
+  document.body.appendChild(svg);
+
   addClass(container, 'class1');
   addClass(container, 'class2 class3 a');
   addClass(container, ['class4']);
