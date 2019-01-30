@@ -154,10 +154,10 @@ function validParams(tag, attributes, content) {
   if (!tag || (tag && typeof tag !== 'string'))
     return errorMessage(ERROR_TAG);
 
-  if (attributes !== null && (attributes instanceof Array || attributes instanceof Object === false))
+  if (attributes !== null && attributes !== undefined && (attributes instanceof Array || attributes instanceof Object === false))
     return errorMessage(ERROR_ATTRIBUTES);
 
-  if (content !== null && content instanceof Array === false && content instanceof Element === false && !typeofText(content))
+  if (content !== null && content !== undefined && content instanceof Array === false && content instanceof Element === false && !typeofText(content))
     return errorMessage(ERROR_CONTENT);
 
   return true;
